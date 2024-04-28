@@ -5,7 +5,7 @@ plugins {
     signing
 }
 
-version = "1.0.0-SNAPSHOT"
+version = "1.0.0"
 
 android {
     compileSdk = 34
