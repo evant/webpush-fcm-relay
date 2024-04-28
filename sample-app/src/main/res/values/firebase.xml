@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="google_app_id">1:1004350792769:android:f80f65645750cb69a5d2c0</string>
-    <string name="project_id">mungtooth</string>
-    <string name="google_api_key">AIzaSyCc6Gi0lMEh7BkchRzAbWaOrg3OBkV0nYs</string>
+    <!-- Copy these values from your firebase dashboard -->
+    <string name="google_app_id"></string>
+    <string name="project_id"></string>
+    <string name="google_api_key"></string>
 </resources>
