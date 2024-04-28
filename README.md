@@ -13,7 +13,7 @@ Relays WebPush messages through firebase to allow them to be received by mobile 
 ## Server Setup
 
 Your first step should be to figure out you are authenticating with Firebase. If you aren't familiar with the process
-you can follow along [here](doc/google-authentication.md). For the rest of this section we'll assume you have a service
+you can follow along [here](docs/google-authentication.md). For the rest of this section we'll assume you have a service
 account key json saved in `./credentials/firebase-key.json`
 
 ### Running the jar directly
