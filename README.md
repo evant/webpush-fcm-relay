@@ -18,7 +18,8 @@ account key json saved in `./credentials/firebase-key.json`
 
 ### Running the jar directly
 
-You can download the jar from (TODO: link to github releases) and run directly. This requires java 21+.
+You can download the [jar](https://github.com/evant/webpush-fcm-relay/releases/download/1.0.0/webpush-fcm-relay.jar)
+and run directly. This requires java 21+.
 
 ```shell
 java -jar webpush-fcm-relay.jar -port=8080 -P:firebase.auth.credentialsDir=./credentials
