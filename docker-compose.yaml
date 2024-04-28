@@ -1,0 +1,9 @@
+version: "3.2"
+services:
+  server:
+    image: docker.io/etatarka/webpush-fcm-relay:latest
+    command: --firebase.auth.credentialsDir=/credentials
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./credentials:/credentials:ro

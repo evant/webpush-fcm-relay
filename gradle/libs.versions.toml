@@ -1,0 +1,57 @@
+[versions]
+firebase-admin = "9.2.0"
+webpush = "0.2-SNAPSHOT"
+kotlinx-coroutines = "1.8.1-Beta"
+core-ktx = "1.12.0"
+lifecycle-runtime-ktx = "2.7.0"
+activity-compose = "1.8.2"
+compose-bom = "2023.08.00"
+firebase-bom = "32.8.1"
+ktor = "3.0.0-beta-1"
+logback = "1.5.6"
+
+[libraries]
+# server
+firebase-admin = { module = "com.google.firebase:firebase-admin", version.ref = "firebase-admin" }
+kotlinx-coroutines-guavua = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava", version.ref = "kotlinx-coroutines" }
+ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-call-logging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
+ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+webpush-encryption = { module = "me.tatarka.webpush:webpush-encryption", version.ref = "webpush" }
+# android client
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version = "23.4.1" }
+# android sample
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+ui = { module = "androidx.compose.ui:ui" }
+ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+material3 = { module = "androidx.compose.material3:material3" }
+assertk = { module = "com.willowtreeapps.assertk:assertk", version = "0.28.1" }
+
+[bundles]
+firebase-messaging-server = [
+    "firebase-admin",
+    "kotlinx-coroutines-guavua"
+]
+ktor = [
+    "ktor-server-core",
+    "ktor-server-netty",
+    "ktor-server-call-logging",
+    "logback"
+]
+compose = [
+    "core-ktx",
+    "activity-compose",
+    "ui",
+    "ui-graphics",
+    "ui-tooling-preview",
+    "material3"
+]
