@@ -38,7 +38,7 @@ dependencies {
 }
 
 group = "me.tatarka.webpush.relay"
-version = "0.1.0-SNAPSHOT"
+version = "1.0.0"
 
 publishing {
     publications {
