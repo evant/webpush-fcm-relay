@@ -1,0 +1,84 @@
+version: 2.1
+
+jobs:
+  build-android:
+    docker:
+      - image: cimg/android:2023.04.1
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: "Build"
+          command: "./gradlew :client-android:assemble"
+      - run:
+          name: "Publish"
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              echo "$MAVEN_CENTRAL_SEC_RING" | base64 -d > $HOME/secring.gpg
+              gpg --import --batch $HOME/secring.gpg
+              ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -PsonatypeUsername="$SONATYPE_USERNAME" -PsonatypePassword="$SONATYPE_PASSWORD" -Psigning.keyId=34BCD878 -Psigning.password="$MAVEN_CENTRAL_KEY_PASSPHRASE" -Psigning.secretKeyRingFile=$HOME/secring.gpg -Porg.gradle.parallel=false
+            fi
+  build-server:
+    docker:
+      - image: cimg/openjdk:21.0.2
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: "Test"
+          command: "./gradlew :server:test"
+      - run:
+          name: "Build"
+          command: "./gradlew :server:buildFatJar :server:buildImage"
+      - persist_to_workspace:
+          root: server
+          paths:
+            - build/libs
+      - run:
+          name: "Publish Image"
+          command: |
+            if [[ "${CIRCLE_TAG}" == "server-"* ]]; then
+              ./gradlew publishImage -Pdockerhub.username="$DOCKERHUB_USERNAME" -Pdockerhub.token="$DOCKERHUB_TOKEN"
+            fi
+  publish-github:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: artifacts
+      - run:
+          name: "Github Release"
+          command: |
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG#server-} ./artifacts/build/libs
+workflows:
+  build:
+    jobs:
+      - build-android:
+          filters:
+            branches:
+              ignore: main
+      - build-android:
+          name: build-android-publish
+          context: opensource-maven
+          filters:
+            branches:
+              only: main
+      - build-server:
+          filters:
+            tags:
+              ignore: /.*/
+      - build-server:
+          name: build-server-publish
+          context: opensource-dockerhub
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^server-.*/
+      - publish-github:
+          context: opensource-github
+          requires:
+            - build-server-publish
+          filters:
+            tags:
+              only: /^server-.*/
