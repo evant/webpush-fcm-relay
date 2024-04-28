@@ -5,8 +5,8 @@ Relays WebPush messages through firebase to allow them to be received by mobile 
 
 ## Features
 
-- Supports both [pre-standard](https://datatracker.ietf.org/doc/html/draft-ietf-webpush-encryption-04) and
-  [standard](https://datatracker.ietf.org/doc/html/rfc8291) encryption methods.
+- Supports both [rfc8291](https://datatracker.ietf.org/doc/html/rfc8291) and the
+  [draft rfc](https://datatracker.ietf.org/doc/html/draft-ietf-webpush-encryption-04) encryption standards.
 - Supports multiple client applications.
 - Includes a client android library for easy setup.
 
@@ -40,6 +40,18 @@ There's a [docker-compose.yaml](/docker-compose.yaml) file in this repo that you
 ```shell
 docker-compose up
 ```
+
+### Arguments
+
+All methods take the same arguments:
+- `-port=` (required) sets the port the server is run on
+- `-host=0.0.0.0` sets the host address the server is run on
+- `-P:firebase.auth.credentialsDir=` sets the directory to looks for firebase credentials, multiple credentials with
+  different project-id's are allowed in that directory.
+
+In addition, the following jvm arguments can be set:
+- `-Dlog.level=INFO` set the level of logging. The default is very conservative, setting this to at least DEBUG will
+  cause requests to be logged.
 
 Note: As the server will require https to handle web pushes properly, you'll want to set up a reverse proxy and
 ssl certificate. There's a lot of ways to do this, and I'd recommend starting with
