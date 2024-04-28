@@ -1,4 +1,7 @@
 [versions]
+server = "1.0.1-pre"
+client-android = "1.0.1-SNAPSHOT"
+
 firebase-admin = "9.2.0"
 webpush = "0.2.0"
 kotlinx-coroutines = "1.8.1-Beta"

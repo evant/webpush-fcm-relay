@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "me.tatarka.webpush.relay"
-version = "1.0.1-pre"
+version = libs.versions.server.get()
 
 ktor {
     fatJar {
