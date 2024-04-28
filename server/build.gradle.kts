@@ -11,13 +11,16 @@ group = "me.tatarka.webpush.relay"
 version = "1.0.0-SNAPSHOT"
 
 ktor {
+    fatJar {
+        archiveFileName = "webpush-fcm-relay.jar"
+    }
     docker {
         jreVersion = JavaVersion.VERSION_21
-        localImageName = "etatarka/webpush-fcm-relay2"
+        localImageName = "etatarka/webpush-fcm-relay"
         imageTag = version.toString()
 
         externalRegistry = dockerHub(
-            appName = provider { "webpush-fcm-relay2" },
+            appName = provider { "webpush-fcm-relay" },
             username = project.providers.gradleProperty("dockerhub.username"),
             password = project.providers.gradleProperty("dockerhub.token")
         )
@@ -40,6 +43,9 @@ dependencies {
     constraints {
         implementation("com.google.guava:guava:33.1.0-jre") {
             because("CVE-2023-2976")
+        }
+        implementation("io.netty:netty-codec-http2:4.1.108.Final") {
+            because("CVE-2024-29025")
         }
     }
 }

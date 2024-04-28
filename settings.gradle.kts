@@ -15,16 +15,13 @@ pluginManagement {
 }
 dependencyResolutionManagement {
     repositories {
-        mavenLocal()
         mavenCentral()
         google()
-        maven { url = uri("https://repo.spring.io/milestone") }
     }
     repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
 }
 
-rootProject.name = "webpush-fcm-relay-project"
+rootProject.name = "webpush-fcm-relay"
 include(":server")
-project(":server").name = "webpush-fcm-relay"
 include(":client-android")
 include(":sample-app")
