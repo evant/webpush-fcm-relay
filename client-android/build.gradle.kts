@@ -5,7 +5,8 @@ plugins {
     signing
 }
 
-version = "1.0.0"
+group = "me.tatarka.webpush.relay"
+version = libs.versions.client.android.get()
 
 android {
     compileSdk = 34
@@ -36,9 +37,6 @@ dependencies {
     api(libs.webpush.encryption)
     api(libs.firebase.messaging)
 }
-
-group = "me.tatarka.webpush.relay"
-version = "1.0.1-SNAPSHOT"
 
 publishing {
     publications {
