@@ -3,6 +3,7 @@ plugins {
 }
 
 nexusPublishing {
+    packageGroup = "me.tatarka.webpush.relay"
     repositories {
         sonatype()
     }
