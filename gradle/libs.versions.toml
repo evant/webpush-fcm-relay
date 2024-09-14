@@ -1,5 +1,5 @@
 [versions]
-server = "1.0.1-pre"
+server = "1.0.1"
 client-android = "1.0.1-SNAPSHOT"
 
 firebase-admin = "9.2.0"
