@@ -66,7 +66,6 @@ tasks.withType<JavaExec>().configureEach {
         "-Dlog.level=DEBUG"
     )
     args = listOf(
-        "-port=8080",
         "-host=localhost",
         "-P:firebase.auth.credentialsDir=${rootProject.projectDir.resolve("credentials")}"
     )

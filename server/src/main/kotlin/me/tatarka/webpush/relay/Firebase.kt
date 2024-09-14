@@ -38,26 +38,38 @@ interface MessagingProvider {
 
 fun MessagingProvider(config: FirebaseConfig): MessagingProvider {
     val logger = LoggerFactory.getLogger(MessagingProvider::class.java)
-    val credentialsDir = config.auth.credentialsDir
-    return if (credentialsDir != null) {
+
+    fun credentialsDirMessagingProvider(credentialsDir: Path): MessagingProvider? {
         val credentials = mutableListOf<ServiceAccountCredentials>()
         if (credentialsDir.notExists()) {
-            throw IllegalArgumentException("$credentialsDir does not exist")
+            logger.warn("$credentialsDir does not exist")
+            return null
         }
         credentialsDir.forEachDirectoryEntry(glob = "*.json") { credentialFile ->
             credentials.add(credentialFile.inputStream().buffered().use {
                 ServiceAccountCredentials.fromStream(it)
             })
         }
+        if (credentials.isEmpty()) {
+            logger.warn("no credentials found in $credentialsDir")
+            return null
+        }
         val provider = ServiceAccountsMessagingProvider(credentials)
         logger.debug("Registered projectIds: ${credentials.joinToString(", ") { it.projectId }}")
-        provider
-    } else {
+        return provider
+    }
+
+    fun defaultMessagingProvider() : MessagingProvider {
         val provider = ApplicationDefaultMessagingProvider()
         logger.debug("Using application default firebase credentials")
-        provider
+        return provider
     }
+
+    val credentialsDir = config.auth.credentialsDir
+    return credentialsDir?.let { credentialsDirMessagingProvider(it)   } ?: defaultMessagingProvider()
 }
+
+
 
 private class ApplicationDefaultMessagingProvider : MessagingProvider {
 
