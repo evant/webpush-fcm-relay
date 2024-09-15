@@ -109,7 +109,6 @@ Pros:
 Cons:
 
 - Unclear licencing
-- Uses deprecated firebase authentication
 - Non-standard message encoding
 - Only supports pre-standard WebPush encryption
 - Only supports a single client application
